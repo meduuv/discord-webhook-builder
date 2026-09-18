@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Discord Webhook Builder</title><style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#090b10;color:#e8eaf0;font:15px system-ui}.wrap{width:min(1000px,94vw);margin:40px auto;padding:25px;border:1px solid #252a36;border-radius:22px;background:#0e1118;box-shadow:0 20px 80px #0008}h1{margin:0 0 8px}p{color:#9aa2b2}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{padding:18px;border:1px solid #252a36;border-radius:16px;background:#11151e}label{display:block;color:#9aa2b2;font-size:12px;margin:12px 0 6px}input,textarea,button{width:100%;padding:12px;border-radius:10px;border:1px solid #303746;background:#151923;color:inherit;font:inherit}textarea{min-height:110px;resize:vertical}button{cursor:pointer;margin-top:14px}.out{height:100%;font:12px ui-monospace,monospace;white-space:pre-wrap;word-break:break-word}.wm{position:fixed;bottom:9px;right:12px;opacity:.22;font:11px monospace}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap"><div class="wm">guns.lol/meduu</div><h1>Discord Webhook Builder</h1><p>Build a copy-ready Discord webhook payload locally. Nothing is sent anywhere.</p>
+<div class="grid"><div class="panel">
+<label>Username</label><input id="user" placeholder="My Webhook">
+<label>Avatar URL</label><input id="avatar" placeholder="https://...">
+<label>Content</label><textarea id="content" placeholder="Hello from the webhook"></textarea>
+<label>Embed title</label><input id="title" placeholder="Optional">
+<label>Embed description</label><textarea id="desc" placeholder="Optional embed description"></textarea>
+<button onclick="build()">Generate JSON</button><button onclick="copy()">Copy JSON</button></div>
+<div class="panel"><div class="out" id="out"></div></div></div></div>
+<script>
+function build(){let p={content:document.querySelector('#content').value||undefined,username:document.querySelector('#user').value||undefined,avatar_url:document.querySelector('#avatar').value||undefined};let title=document.querySelector('#title').value,desc=document.querySelector('#desc').value;if(title||desc)p.embeds=[{...(title?{title}:{}),...(desc?{description:desc}:{})}];Object.keys(p).forEach(k=>p[k]===undefined&&delete p[k]);document.querySelector('#out').textContent=JSON.stringify(p,null,2);return p}
+function copy(){navigator.clipboard?.writeText(JSON.stringify(build(),null,2))}
+build();
+</script></body></html>
+<!-- by guns.lol/meduu -->
